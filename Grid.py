@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 
 # Процедура создания сеточного графа
 # numrow - количнство рядов, numcol - колонок
-def CreateGridGraph(numrow, numcol):
+# obstacles - список препятсвий. Стиреть узлы
+def CreateGridGraph(numrow, numcol, obstacles):
     G = nx.Graph() # 0 - 1 -2 ... 9
     # Добавляем вершины графа сетки
     for row in range(numrow):
@@ -23,6 +24,8 @@ def CreateGridGraph(numrow, numcol):
         for col in range(numcol-1):
             G.add_edge((row, col),(row+1,col+1))
             G.add_edge((row, col+1),(row+1,col))
+    for r,c in obstacles:
+        G.remove_node((r,c))
     return G
 
 #print G.nodes
@@ -31,12 +34,14 @@ def CreateGridGraph(numrow, numcol):
 def PlotGrid(G):
     for v in G.nodes:
         r, c = v
-        plt.scatter([c],[r])
+        #plt.scatter([c],[r],300, c ='k', marker=r'$\clubsuit$')
+        plt.scatter([c], [r], 500, c='k', marker='o')
     for e in G.edges:
         v1,v2 = e
         r1,c1 = v1
         r2,c2 = v2
-        #plt.plot([c1,c2],[r1,r2],color='gr')
+        plt.plot([c1,c2],[r1,r2],'k')
+    plt.plot([1,1,1],[1,2,3],'b',linewidth=10, solid_capstyle='round')
     plt.show()
 
 # Прорисовка трассы

@@ -8,16 +8,6 @@ import matplotlib.pyplot as plt
 
 import Grid
 
-#g = nx.path_graph(10) # 0 - 1 -2 ... 9
-g = Grid.CreateGridGraph(4,4)
-#Grid.PlotGrid(g)
-#print g.edges
-#nx.draw_networkx(g,{0:1,1:2,2:3,3:4})
-#plt.show()
-#res = (0,2) in g.edges
-#Test
-#kl = [(1,2),(1,0),(1,1)]
-#kl = sorted(kl)
 
 csp = dwavebinarycsp.ConstraintSatisfactionProblem('BINARY')
 
@@ -215,7 +205,7 @@ def Trace(g,v1,v2):
     sampler = EmbeddingComposite(DWaveSampler())
     #sampler = EmbeddingComposite(DWaveSampler(endpoint='https://URL_to_my_D-Wave_system/', token='ABC-123456789012345678901234567890', solver='My_D-Wave_Solver'))
     solution = sampler.sample(bqm, num_reads=100)
-    """
+"""
 
     print(solution)
     min_energy = next(solution.data(['energy']))[0]
@@ -235,8 +225,13 @@ def Trace(g,v1,v2):
 
     return [v1,(nr,nk),v2]
 
-res = Trace(g, (0,0),(2,0))
+#res = Trace(g, (0,0),(1,2))
+#g = nx.path_graph(10) # 0 - 1 -2 ... 9
+g = Grid.CreateGridGraph(4,4,[] )
+#g = Grid.CreateGridGraph(4,4,[(0,0),(1,1)] )
+Grid.PlotGrid(g)
+#print g.edges
 
 #Grid.plt.plot([0,nk],[0,nr],color='b')
 #Grid.PlotGrid(g)
-Grid.PlotTrace(g, res)
+#Grid.PlotTrace(g, res)
