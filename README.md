@@ -20,7 +20,7 @@
 
     Grid.PlotGrid(g)
 
-![aaa](Fifure_1.png) 
+![](Fifure_1.png) 
 
 Координнаты задаются в виде:
 (ряд, колонка).
