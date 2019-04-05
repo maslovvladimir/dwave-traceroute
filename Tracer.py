@@ -82,7 +82,7 @@ def neigbor(r10,r11, c10,c11, r20,r21,  c20,c21, res):
     r2 = BinToInt([r20,r21]) # индекс ряда 2 вершины
     c2 = BinToInt([c20,c21])  # индекс колонки 2 вершины
     v2 = r2,c2
-    if (v1,v2) in g.edges:
+    if ((v1,v2) in g.edges):
         return res == 1
     else:
         #return  res == 0
@@ -95,7 +95,9 @@ def neigbor2(r10,r11, c10,c11, r20,r21, c20,c21):
     r2 = BinToInt([r20,r21]) # индекс ряда 2 вершины
     c2 = BinToInt([c20,c21])  # индекс колонки 2 вершины
     v2 = r2,c2
-    return v1,v2 in g.edges
+    res = (v1,v2) in g.edges
+    #return v1,v2 in g.edges
+    return res
 
 """
 Формирует список параметров вида [(0,0,0),(0,0,1),(0,0,2), (0,1,0),(0,1,1),(0,1,2)]
@@ -171,8 +173,13 @@ def Trace(g,v1,v2):
     cs0 = dwavebinarycsp.Constraint.from_func(neigbor, L(0) + L(1) + ['res0'], dwavebinarycsp.BINARY, name='cs0')
     csp.add_constraint(cs0)
 
-    cs1 = dwavebinarycsp.Constraint.from_func(neigbor, L(1) + L(2) + ['res2'], dwavebinarycsp.BINARY, name='cs1')
+    #cs2 = dwavebinarycsp.Constraint.from_func(neigbor, L(1) + L(3) + ['res2'], dwavebinarycsp.BINARY, name='cs2')
+    cs2 = dwavebinarycsp.Constraint.from_func(neigbor2, L(1) + L(3), dwavebinarycsp.BINARY, name='cs2')
+    csp.add_constraint(cs2)
+
+    cs1 = dwavebinarycsp.Constraint.from_func(neigbor, L(3) + L(2) + ['res3'], dwavebinarycsp.BINARY, name='cs1')
     csp.add_constraint(cs1)
+
     r1,c1 = v1
     r2,c2 = v2
     # Устанавливаем начальную и конечную вершины
@@ -182,12 +189,14 @@ def Trace(g,v1,v2):
     setIntVar2(cs1, (2, 0), 2, 0)  # ряд вершины 2
     setIntVar2(cs1, (2, 1), 2, 2)  # колонка вершины 2
     """
+    #bqm = dwavebinarycsp.stitch(csp,min_classical_gap=2.0, max_graph_size=9)
+
     setIntVar2(cs0, (0, 0), 2, r1)  # ряд вершины 1
     setIntVar2(cs0, (0, 1), 2, c1)  # колонка вершины 1
     setIntVar2(cs1, (2, 0), 2, r2)  # ряд вершины 2
     setIntVar2(cs1, (2, 1), 2, c2)  # колонка вершины 2
 
-    bqm = dwavebinarycsp.stitch(csp, max_graph_size=8)
+    bqm = dwavebinarycsp.stitch(csp,min_classical_gap=2.0, max_graph_size=8)
     #print(" Do stitch()")
     # print (bqm)
 
@@ -205,7 +214,7 @@ def Trace(g,v1,v2):
     sampler = EmbeddingComposite(DWaveSampler())
     #sampler = EmbeddingComposite(DWaveSampler(endpoint='https://URL_to_my_D-Wave_system/', token='ABC-123456789012345678901234567890', solver='My_D-Wave_Solver'))
     solution = sampler.sample(bqm, num_reads=100)
-"""
+    """
 
     print(solution)
     min_energy = next(solution.data(['energy']))[0]
@@ -228,10 +237,26 @@ def Trace(g,v1,v2):
 #g = nx.path_graph(10) # 0 - 1 -2 ... 9
 g = Grid.CreateGridGraph(4,4,[] )
 #g = Grid.CreateGridGraph(4,4,[(0,0),(1,1)] )
-#res = Trace(g, (0,0),(1,2))
-Grid.PlotGrid(g)
+res = Trace(g, (0,0),(0,3))
+
+# Обязательно проверяем результат
+err = False
+if len(res)>0:
+    for i in range(len(res)-1):
+        v1 = res[i]
+        v2 = res[i+1]
+        if (v1, v2) in g.edges:
+            pass
+        else:
+            print("*** Error in neighbor {0} - {1}".format( v1,v2))
+            err = True
+            break
+if err :
+    res = []
+
+#Grid.PlotGrid(g)
 #print g.edges
 
 #Grid.plt.plot([0,nk],[0,nr],color='b')
 #Grid.PlotGrid(g)
-#Grid.PlotTrace(g, res)
+Grid.PlotTrace(g, res)
