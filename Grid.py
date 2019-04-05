@@ -35,13 +35,13 @@ def PlotGrid(G):
     for v in G.nodes:
         r, c = v
         #plt.scatter([c],[r],300, c ='k', marker=r'$\clubsuit$')
-        plt.scatter([c], [r], 500, c='k', marker='o')
+        plt.scatter([c], [r], 40, c='k', marker='o')
     for e in G.edges:
         v1,v2 = e
         r1,c1 = v1
         r2,c2 = v2
         plt.plot([c1,c2],[r1,r2],'k')
-    plt.plot([1,1,1],[1,2,3],'b',linewidth=10, solid_capstyle='round')
+    #plt.plot([1,1,1],[1,2,3],'b',linewidth=10, solid_capstyle='round')
     plt.show()
 
 # Прорисовка трассы

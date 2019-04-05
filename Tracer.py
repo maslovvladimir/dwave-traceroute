@@ -228,10 +228,10 @@ def Trace(g,v1,v2):
 #g = nx.path_graph(10) # 0 - 1 -2 ... 9
 g = Grid.CreateGridGraph(4,4,[] )
 #g = Grid.CreateGridGraph(4,4,[(0,0),(1,1)] )
-res = Trace(g, (0,0),(1,2))
-#Grid.PlotGrid(g)
+#res = Trace(g, (0,0),(1,2))
+Grid.PlotGrid(g)
 #print g.edges
 
 #Grid.plt.plot([0,nk],[0,nr],color='b')
 #Grid.PlotGrid(g)
-Grid.PlotTrace(g, res)
+#Grid.PlotTrace(g, res)
