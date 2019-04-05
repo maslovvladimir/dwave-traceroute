@@ -48,7 +48,7 @@ def PlotGrid(G):
 def PlotTrace(G,trace):
     for v in G.nodes:
         r, c = v
-        plt.scatter([c],[r])
+        plt.scatter([c],[r],40,'k')
     x = []
     y =[]
     for row, col in trace:
