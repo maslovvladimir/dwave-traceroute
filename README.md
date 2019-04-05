@@ -20,7 +20,7 @@
 
     Grid.PlotGrid(g)
 
-!(https://github.com/maslovvladimir/dwave-traceroute/blob/master/Figure_1.png) 
+![](Fifure_1.png) 
 
 Координнаты задаются в виде:
 (ряд, колонка).
@@ -33,5 +33,5 @@
 
     Grid.PlotTrace(g, res)    
     
-## Запуск.
+##Запуск.
     python Tracer.py
