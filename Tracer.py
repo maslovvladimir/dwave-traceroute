@@ -174,10 +174,10 @@ def Trace(g,v1,v2):
     csp.add_constraint(cs0)
 
     #cs2 = dwavebinarycsp.Constraint.from_func(neigbor, L(1) + L(3) + ['res2'], dwavebinarycsp.BINARY, name='cs2')
-    cs2 = dwavebinarycsp.Constraint.from_func(neigbor2, L(1) + L(3), dwavebinarycsp.BINARY, name='cs2')
-    csp.add_constraint(cs2)
+    #cs2 = dwavebinarycsp.Constraint.from_func(neigbor2, L(1) + L(3), dwavebinarycsp.BINARY, name='cs2')
+    #csp.add_constraint(cs2)
 
-    cs1 = dwavebinarycsp.Constraint.from_func(neigbor, L(3) + L(2) + ['res3'], dwavebinarycsp.BINARY, name='cs1')
+    cs1 = dwavebinarycsp.Constraint.from_func(neigbor, L(1) + L(2) + ['res3'], dwavebinarycsp.BINARY, name='cs1')
     csp.add_constraint(cs1)
 
     r1,c1 = v1
@@ -237,7 +237,7 @@ def Trace(g,v1,v2):
 #g = nx.path_graph(10) # 0 - 1 -2 ... 9
 g = Grid.CreateGridGraph(4,4,[] )
 #g = Grid.CreateGridGraph(4,4,[(0,0),(1,1)] )
-res = Trace(g, (0,0),(0,3))
+res = Trace(g, (0,0),(1,2))
 
 # Обязательно проверяем результат
 err = False

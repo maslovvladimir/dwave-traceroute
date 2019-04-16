@@ -46,6 +46,9 @@ def PlotGrid(G):
 
 # Прорисовка трассы
 def PlotTrace(G,trace):
+    r0,c0 = trace[0]
+    re,ce = trace[-1]
+    plt.title("Trace: ({0},{1})-({2},{3})".format(r0,c0,re,ce) )
     for v in G.nodes:
         r, c = v
         plt.scatter([c],[r],40,'k')
