@@ -4,7 +4,7 @@
 
 ## Установка.
 
-    git clone dfdfdfd
+    git clone https://github.com/maslovvladimir/dwave-traceroute.git
 
 ## Параметры.
 На данный момент программа работает с сеткой 4x4
